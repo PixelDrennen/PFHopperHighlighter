@@ -1,6 +1,6 @@
-# PF Hopper Highlighter
+# PF Hopper Highlighter / PF Helper
 
-Client-only Fabric mod for Peaceful Farms PF Hoppers.
+Client-only Fabric helper for Peaceful Farms PF Hoppers and Infinite Storage Barrels.
 
 ## Target
 
@@ -9,40 +9,58 @@ Client-only Fabric mod for Peaceful Farms PF Hoppers.
 - Fabric API **0.155.2+26.1.2**
 - Java **25**
 
-## What it does
+## Features
 
-- Watches for `Successfully placed a PFHopper.` and records the hopper you just placed.
-- Watches for `Successfully remove PFHopper.` and removes the recorded marker.
-- Learns existing PF Hoppers when you open them and the container title is `PF Hopper`.
-- Saves positions per **server + dimension** in `config/pf-hopper-highlighter.tsv`.
-- Draws an **orange 3px outline through walls** within 128 blocks.
-- Sends no custom packets and requires nothing on the Peaceful Farms server.
+- Learns PF Hoppers from the placement/removal messages and the `PF Hopper` GUI title.
+- Learns Infinite Storage Barrels from the `[PFBarrel] Infinite Barrel placed successfully!` message and the `PFBarrel Storage` GUI title.
+- Preserves existing PF Hopper tracking in `config/pf-hopper-highlighter.tsv`.
+- Stores tracked Infinite Barrels in `config/pf-barrel-highlighter.tsv`.
+- Orange PF Hopper wireframes are centered and **0.25 blocks** wide.
+- Cyan Infinite Barrel wireframes are centered and **0.42 blocks** wide.
+- Wireframes render through walls with a configurable distance.
+- `/pfhelper count` reports how many tracked PF Hoppers are in your current chunk, plus the tracked Infinite Barrel count.
+- Client settings persist in `config/pf-helper.properties`.
+- Sends no custom packets and requires no server-side mod.
+
+## Commands
+
+```text
+/pfhelper status
+/pfhelper help
+/pfhelper outlines toggle
+/pfhelper outlines on
+/pfhelper outlines off
+/pfhelper hoppers toggle
+/pfhelper hoppers on
+/pfhelper hoppers off
+/pfhelper barrels toggle
+/pfhelper barrels on
+/pfhelper barrels off
+/pfhelper range <8-2048>
+/pfhelper count
+```
 
 ## Build on Fedora
 
-Minecraft 26.1.2 requires Java 25 for mod development/runtime.
-
-Once `java -version` and `javac -version` show Java 25:
+Minecraft 26.1.2 requires Java 25 for development/runtime.
 
 ```bash
+git pull
+chmod +x build.sh
 ./build.sh
 ```
 
-`build.sh` downloads a private copy of Gradle 9.5.0 into this project and builds the mod. The output jar will be:
+The output jar will be:
 
 ```text
-build/libs/pf-hopper-highlighter-1.0.2.jar
+build/libs/pf-hopper-highlighter-1.1.0.jar
 ```
 
 ## Install in Prism Launcher
 
 1. Make sure the 26.1.2 instance has Fabric Loader and Fabric API installed.
 2. Right-click the instance -> **Edit** -> **Mods**.
-3. Add `pf-hopper-highlighter-1.0.2.jar`.
+3. Replace the older PF Hopper Highlighter jar with `pf-hopper-highlighter-1.1.0.jar`.
 4. Launch and join Peaceful Farms.
 
-Existing PF Hoppers are learned the first time you open each one. New PF Hoppers should be learned automatically from the placement success message.
-
-## Notes
-
-This mod intentionally uses three independent server-visible/client-visible signals instead of assuming PF Hoppers have unique block NBT. Peaceful Farms presents them to the client as ordinary `minecraft:hopper` blocks, so the server's success messages and the `PF Hopper` GUI title are the useful identifiers.
+Existing tracked PF Hoppers are retained automatically. Existing Infinite Barrels can be learned by opening them once.
