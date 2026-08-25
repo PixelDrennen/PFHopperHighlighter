@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "pfhopperhighlighter",
+  "version": "${version}",
+  "name": "PF Hopper Highlighter",
+  "description": "Client-side tracker and through-wall highlighter for Peaceful Farms PF Hoppers.",
+  "authors": ["Drennen / ChatGPT"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "local.peacefulfarms.pfhopper.PFHopperHighlighterClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
